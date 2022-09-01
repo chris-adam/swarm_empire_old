@@ -9,13 +9,17 @@ pipeline {
             dir("client") {
                 sh "npm install --global @angular/cli"
                 sh "npm ci"
-                sh "ng build"
+                sh "npm run build"
             }
          }
       }
       stage("Test") {
         steps {
-            echo "TODO"
+            dir ("client") {
+                warnError(message: "Frontend tests failed") {
+                    sh "ng test --watch=false --browsers=ChromeHeadless --code-coverage=true"
+                }
+            }
         }
       }
       stage('SonarQube Analysis') {
