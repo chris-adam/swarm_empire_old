@@ -1,0 +1,53 @@
+pipeline {
+   agent any
+   tools {
+      nodejs 'node-16-17'
+   }
+   stages {
+      stage("Build") {
+         steps {
+            dir("client") {
+                sh "npm install --global @angular/cli"
+                sh "npm ci"
+                sh "ng build"
+            }
+         }
+      }
+      stage("Test") {
+        steps {
+            echo "TODO"
+        }
+      }
+      stage('SonarQube Analysis') {
+         when { anyOf { branch 'main' ; branch "PR-*" } }
+         environment {
+            SCANNER_HOME = tool 'SonarScanner'
+            PATH = "${env.SCANNER_HOME}/bin:${env.PATH}"
+         }
+         steps {
+            withSonarQubeEnv('sonar') {
+               sh 'sonar-scanner'
+            }
+            timeout(time: 3, unit: 'MINUTES') {
+               waitForQualityGate abortPipeline: true
+            }
+         }
+      }
+      stage('Deploy') {
+         when {
+            branch 'deploy/*'
+         }
+        steps {
+            echo "TODO"
+        }
+      }
+   }
+   post {
+      unsuccessful {
+         emailext to: "adam.chris@live.be",
+                  recipientProviders: [requestor()],
+                  subject: "[Jenkins] Swarm Game - Branch ${BRANCH_NAME} - Pipeline ${currentBuild.currentResult}",
+                  body: "${env.RUN_DISPLAY_URL}"
+      }
+   }
+}
