@@ -1,20 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { signUpComponent } from './components/sign-up/sign-up.component';
+import { HeaderComponent } from './components/header/header.component';
+import { RouterModule } from '@angular/router';
+import { LandingPageComponent } from './landing-page.component';
 
 @NgModule({
   declarations: [
-    LandingPageComponent,
-    signUpComponent
+    HomePageComponent,
+    signUpComponent,
+    HeaderComponent,
+    LandingPageComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
-    LandingPageComponent
+    LandingPageComponent,
+    HomePageComponent,
+    signUpComponent,
+    HeaderComponent
   ]
 })
 export class LandingPageModule { }
