@@ -1,0 +1,77 @@
+<div class="form-card">
+    <h2>Sign Up</h2>
+    <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+        <div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="emailAddress"
+                    [class.input-invalid]="signUpForm.get('emailAddress')?.invalid && signUpForm.get('emailAddress')?.touched">
+            </div>
+            <div
+                *ngIf="signUpForm.get('emailAddress')?.invalid && (signUpForm.get('emailAddress')?.dirty || signUpForm.get('emailAddress')?.touched)">
+                <p *ngIf="signUpForm.get('emailAddress')?.errors?.['required']">
+                    Email is required.
+                </p>
+                <p *ngIf="signUpForm.get('emailAddress')?.invalid">
+                    Email is invalid.
+                </p>
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" formControlName="username"
+                    [class.input-invalid]="signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched">
+            </div>
+            <div
+                *ngIf="signUpForm.get('username')?.invalid && (signUpForm.get('username')?.dirty || signUpForm.get('username')?.touched)">
+                <p *ngIf="signUpForm.get('username')?.errors?.['required']">
+                    Username is required.
+                </p>
+                <p *ngIf="signUpForm.get('username')?.invalid">
+                    Username must be at least 3 characters long.
+                </p>
+            </div>
+        </div>
+
+        <div formGroupName="passwords">
+            <div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" formControlName="password"
+                        [class.input-invalid]="signUpForm.get('passwords')?.get('password')?.invalid && signUpForm.get('passwords')?.get('password')?.touched">
+                </div>
+                <div
+                    *ngIf="signUpForm.get('passwords')?.get('password')?.invalid && (signUpForm.get('passwords')?.get('password')?.dirty || signUpForm.get('passwords')?.get('password')?.touched)">
+                    <p *ngIf="signUpForm.get('passwords')?.get('password')?.errors?.['required']">
+                        Password is required.
+                    </p>
+                    <p *ngIf="signUpForm.get('passwords')?.get('password')?.errors?.['minlength']">
+                        Password must be at least 8 characters long.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" id="confirmPassword" formControlName="confirmPassword"
+                        [class.input-invalid]="signUpForm.get('passwords')?.get('confirmPassword')?.invalid && signUpForm.get('passwords')?.get('confirmPassword')?.touched">
+                </div>
+                <div
+                    *ngIf="signUpForm.get('passwords')?.get('confirmPassword')?.invalid && (signUpForm.get('passwords')?.get('confirmPassword')?.dirty || signUpForm.get('passwords')?.get('confirmPassword')?.touched)">
+                    <p *ngIf="signUpForm.get('passwords')?.get('confirmPassword')?.errors?.['required']">
+                        Confirm password is required.
+                    </p>
+                    <p *ngIf="signUpForm.get('passwords')?.errors?.['mismatch']">
+                        <!-- Improve behaviour of "Passwords do not match" error hinting -->
+                        Passwords do not match.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+        </div>
+    </form>
+</div>
