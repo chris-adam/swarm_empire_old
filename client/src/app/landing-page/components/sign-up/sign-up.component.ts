@@ -9,7 +9,7 @@ import { CustomValidators } from 'src/app/utils/custom-validators';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class signUpComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
