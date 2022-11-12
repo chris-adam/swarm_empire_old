@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:jdk11
+FROM jenkins/jenkins:lts-jdk11
 
 USER root
 
@@ -15,5 +15,3 @@ RUN apt-get install -y chromium
 ENV CHROME_BIN /usr/bin/chromium
 
 USER jenkins
-
-RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
